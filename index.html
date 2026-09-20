@@ -140,3 +140,36 @@
    }
  </style>
 </head>
+ <body>
+ <a class="skip" href="#main">Skip to main content</a>
+ <header>
+   <p class="kicker">Narrow AI use-case brief</p>
+   <h1>Route dining-hall comments to the right owner</h1>
+   <p class="lede">A single-label classifier for a small campus dining team. Not a chatbot. Not a sentiment dashboard. Four buckets, human review on the unsure cases.</p>
+ </header>
+ <main id="main">
+   <nav class="toc" aria-labelledby="toc-heading">
+     <h2 id="toc-heading">On this page</h2>
+     <ol>
+       <li><a href="#problem">Problem</a></li>
+       <li><a href="#user">User</a></li>
+       <li><a href="#data">Data source</a></li>
+       <li><a href="#constraints">Constraints</a></li>
+       <li><a href="#evaluation">Evaluation</a></li>
+       <li><a href="#non-goals">What this is not</a></li>
+     </ol>
+   </nav>
+   <h2 id="problem">Problem</h2>
+   <p>Students submit short comments through a QR “How was your meal?” form. Today a coordinator reads every message and forwards it in Slack: kitchen, service, or facilities. That routing is slow, inconsistent, and eats the hour that should go to fixing the actual issue.</p>
+   <p>The model’s only job is to propose one label so the right person sees the ticket first. A person still decides what to do.</p>
+   <h2 id="user">User</h2>
+   <dl>
+     <dt>Primary user</dt>
+     <dd>Dining operations coordinator for one residential dining hall (not a system-wide analytics team).</dd>
+     <dt>Secondary users</dt>
+     <dd>Kitchen lead, service lead, and facilities lead who receive labeled tickets in an existing shared inbox.</dd>
+     <dt>Job to be done</dt>
+     <dd>Every weekday morning, clear overnight comments in under 15 minutes, with cleanliness issues never sitting unnoticed.</dd>
+     <dt>Success looks like</dt>
+     <dd>Comments land with the right owner on the first pass; the coordinator only opens low-confidence or “other” items.</dd>
+

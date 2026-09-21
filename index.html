@@ -1,175 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="description" content="Project brief for a narrow AI classifier that routes campus dining comments into food quality, wait time, cleanliness, or other.">
- <title>Use-case brief: routing campus dining comments</title>
- <style>
-   :root {
-     --bg: #f6f3ee;
-     --fg: #1c1917;
-     --muted: #44403c;
-     --card: #fffcf8;
-     --accent: #1d4ed8;
-     --accent-ink: #ffffff;
-     --border: #d6d3d1;
-     --focus: #0f172a;
-   }
-   * { box-sizing: border-box; }
-   html { scroll-behavior: smooth; }
-   body {
-     margin: 0;
-     font-family: Georgia, "Times New Roman", serif;
-     font-size: 1.125rem;
-     line-height: 1.65;
-     color: var(--fg);
-     background: var(--bg);
-   }
-   .skip {
-     position: absolute;
-     left: 0.75rem;
-     top: -3rem;
-     background: var(--focus);
-     color: #fff;
-     padding: 0.5rem 0.85rem;
-     z-index: 10;
-   }
-   .skip:focus { top: 0.75rem; }
-   header, main, footer {
-     max-width: 42rem;
-     margin: 0 auto;
-     padding: 1.5rem 1.25rem;
-   }
-   header {
-     padding-top: 2.5rem;
-   }
-   .kicker {
-     font-family: system-ui, sans-serif;
-     font-size: 0.8rem;
-     letter-spacing: 0.08em;
-     text-transform: uppercase;
-     color: var(--muted);
-     margin: 0 0 0.5rem;
-   }
-   h1, h2, h3 {
-     font-family: system-ui, -apple-system, sans-serif;
-     line-height: 1.25;
-   }
-   h1 { font-size: 2rem; margin: 0 0 0.75rem; }
-   h2 {
-     font-size: 1.35rem;
-     margin: 2.25rem 0 0.75rem;
-     padding-top: 0.5rem;
-     border-top: 1px solid var(--border);
-   }
-   h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
-   p, li { color: var(--fg); }
-   a { color: var(--accent); }
-   a:focus-visible, button:focus-visible {
-     outline: 3px solid var(--focus);
-     outline-offset: 2px;
-   }
-   nav.toc {
-     background: var(--card);
-     border: 1px solid var(--border);
-     border-radius: 0.5rem;
-     padding: 1rem 1.1rem;
-   }
-   nav.toc h2 {
-     border: 0;
-     margin: 0 0 0.5rem;
-     padding: 0;
-     font-size: 1rem;
-   }
-   nav.toc ol { margin: 0; padding-left: 1.25rem; }
-   .lede { font-size: 1.2rem; color: var(--muted); }
-   dl {
-     display: grid;
-     grid-template-columns: 8.5rem 1fr;
-     gap: 0.4rem 1rem;
-   }
-   dt {
-     font-family: system-ui, sans-serif;
-     font-weight: 700;
-     font-size: 0.9rem;
-   }
-   dd { margin: 0; }
-   table {
-     width: 100%;
-     border-collapse: collapse;
-     font-family: system-ui, sans-serif;
-     font-size: 0.95rem;
-     background: var(--card);
-   }
-   caption {
-     text-align: left;
-     font-weight: 700;
-     margin-bottom: 0.5rem;
-     font-family: system-ui, sans-serif;
-   }
-   th, td {
-     border: 1px solid var(--border);
-     padding: 0.55rem 0.65rem;
-     text-align: left;
-     vertical-align: top;
-   }
-   th { background: #e7e5e4; }
-   blockquote {
-     margin: 1rem 0;
-     padding: 0.75rem 1rem;
-     border-left: 4px solid var(--accent);
-     background: var(--card);
-   }
-   .note {
-     font-family: system-ui, sans-serif;
-     font-size: 0.95rem;
-     background: var(--card);
-     border: 1px solid var(--border);
-     padding: 0.85rem 1rem;
-     border-radius: 0.5rem;
-   }
-   footer {
-     color: var(--muted);
-     font-family: system-ui, sans-serif;
-     font-size: 0.9rem;
-   }
-   @media (max-width: 640px) {
-     dl { grid-template-columns: 1fr; }
-     dt { margin-top: 0.5rem; }
-   }
- </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Task 1 AI problem design: classify campus dining comments into four operational labels, with measurable success criteria.">
+  <title>Task 1: Dining comment routing — problem and success criteria</title>
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --fg: #1c1917;
+      --muted: #44403c;
+      --card: #fffcf8;
+      --accent: #1d4ed8;
+      --border: #d6d3d1;
+      --focus: #0f172a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    .skip {
+      position: absolute;
+      left: 0.75rem;
+      top: -3rem;
+      background: var(--focus);
+      color: #fff;
+      padding: 0.5rem 0.85rem;
+      z-index: 10;
+    }
+    .skip:focus { top: 0.75rem; }
+    header, main, footer {
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem;
+    }
+    header { padding-top: 2.5rem; }
+    .kicker {
+      font-family: system-ui, sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+    h1, h2, h3 {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.25;
+    }
+    h1 { font-size: 2rem; margin: 0 0 0.75rem; }
+    h2 {
+      font-size: 1.35rem;
+      margin: 2.25rem 0 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+    h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+    a { color: var(--accent); }
+    a:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+    nav.toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 1rem 1.1rem;
+    }
+    nav.toc h2 {
+      border: 0;
+      margin: 0 0 0.5rem;
+      padding: 0;
+      font-size: 1rem;
+    }
+    nav.toc ol { margin: 0; padding-left: 1.25rem; }
+    .lede { font-size: 1.2rem; color: var(--muted); }
+    dl {
+      display: grid;
+      grid-template-columns: 8.5rem 1fr;
+      gap: 0.4rem 1rem;
+    }
+    dt {
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    dd { margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+      background: var(--card);
+    }
+    caption {
+      text-align: left;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-family: system-ui, sans-serif;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #e7e5e4; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.75rem 1rem;
+      border-left: 4px solid var(--accent);
+      background: var(--card);
+    }
+    .note {
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      border-radius: 0.5rem;
+    }
+    footer {
+      color: var(--muted);
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 640px) {
+      dl { grid-template-columns: 1fr; }
+      dt { margin-top: 0.5rem; }
+    }
+  </style>
 </head>
- <body>
- <a class="skip" href="#main">Skip to main content</a>
- <header>
-   <p class="kicker">Narrow AI use-case brief</p>
-   <h1>Route dining-hall comments to the right owner</h1>
-   <p class="lede">A single-label classifier for a small campus dining team. Not a chatbot. Not a sentiment dashboard. Four buckets, human review on the unsure cases.</p>
- </header>
- <main id="main">
-   <nav class="toc" aria-labelledby="toc-heading">
-     <h2 id="toc-heading">On this page</h2>
-     <ol>
-       <li><a href="#problem">Problem</a></li>
-       <li><a href="#user">User</a></li>
-       <li><a href="#data">Data source</a></li>
-       <li><a href="#constraints">Constraints</a></li>
-       <li><a href="#evaluation">Evaluation</a></li>
-       <li><a href="#non-goals">What this is not</a></li>
-     </ol>
-   </nav>
-   <h2 id="problem">Problem</h2>
-   <p>Students submit short comments through a QR “How was your meal?” form. Today a coordinator reads every message and forwards it in Slack: kitchen, service, or facilities. That routing is slow, inconsistent, and eats the hour that should go to fixing the actual issue.</p>
-   <p>The model’s only job is to propose one label so the right person sees the ticket first. A person still decides what to do.</p>
-   <h2 id="user">User</h2>
-   <dl>
-     <dt>Primary user</dt>
-     <dd>Dining operations coordinator for one residential dining hall (not a system-wide analytics team).</dd>
-     <dt>Secondary users</dt>
-     <dd>Kitchen lead, service lead, and facilities lead who receive labeled tickets in an existing shared inbox.</dd>
-     <dt>Job to be done</dt>
-     <dd>Every weekday morning, clear overnight comments in under 15 minutes, with cleanliness issues never sitting unnoticed.</dd>
-     <dt>Success looks like</dt>
-     <dd>Comments land with the right owner on the first pass; the coordinator only opens low-confidence or “other” items.</dd>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header>
+    <p class="kicker">Task 1 · AI problem design</p>
+    <h1>Classify dining-hall comments so the right owner sees them first</h1>
+    <p class="lede">A practical, single-label classification problem with explicit go/no-go success criteria. Later tasks can wrap a public model API around this same contract.</p>
+  </header>
+  <main id="main">
+    <nav class="toc" aria-labelledby="toc-heading">
+      <h2 id="toc-heading">On this page</h2>
+      <ol>
+        <li><a href="#problem">Practical problem</a></li>
+        <li><a href="#user">User</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#constraints">Constraints</a></li>
+        <li><a href="#success">Success criteria</a></li>
+        <li><a href="#next">What Task 2 can build</a></li>
+      </ol>
+    </nav>
 
+    <h2 id="problem">Practical problem</h2>
+    <p>Students type 1–3 sentences into a QR “How was your meal?” form. A dining coordinator currently reads every message and forwards it in Slack to kitchen, service, or facilities. Routing is slow and inconsistent, and cleanliness issues can sit in the pile.</p>
+    <p><strong>AI task:</strong> given one comment, output exactly one label — <code>food_quality</code>, <code>wait_time</code>, <code>cleanliness</code>, or <code>other</code> — plus a confidence score. A person still decides what to fix. The model does not write replies.</p>
+
+    <h2 id="user">User</h2>
+    <dl>
+      <dt>Primary user</dt>
+      <dd>Dining operations coordinator for one residential hall.</dd>
+      <dt>Downstream</dt>
+      <dd>Kitchen lead, service lead, and facilities lead who receive labeled tickets.</dd>
+      <dt>Job to be done</dt>
+      <dd>Clear overnight comments on weekday mornings in under 15 minutes, without missing hygiene complaints.</dd>
+    </dl>
+
+    <h2 id="data">Data</h2>
+    <p>Closed set from one hall, one semester, existing QR form only. About 320 English comments (band 250–400), typically under 280 characters. Two staff raters label independently; the coordinator breaks ties. Strip names, emails, student IDs, and room numbers before any model call.</p>
+    <p class="note">Examples are <strong>synthetic</strong>, not real student comments.</p>
+    <table>
+      <caption>Four labels the system must predict</caption>
+      <thead>
+        <tr>
+          <th scope="col">Label</th>
+          <th scope="col">Meaning</th>
+          <th scope="col">Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">food_quality</th>
+          <td>Taste, temperature, missing items, dietary mismatch.</td>
+          <td>“The lentil stew was cold and the rice was crunchy.”</td>
+        </tr>
+        <tr>
+          <th scope="row">wait_time</th>
+          <td>Lines, slow restock, late station opening.</td>
+          <td>“Grill line took 25 minutes at 12:40.”</td>
+        </tr>
+        <tr>
+          <th scope="row">cleanliness</th>
+          <td>Spills, dirty tables, pests, unsafe surfaces. Highest operational priority.</td>
+          <td>“Standing water and trays left on the floor by the dish return.”</td>
+        </tr>
+        <tr>
+          <th scope="row">other</th>
+          <td>Praise, hours, mixed topics, or anything outside the three buckets.</td>
+          <td>“Love the playlist. Please bring back oat milk.”</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="constraints">Constraints</h2>
+    <ul>
+      <li>One label per comment. Mixed comments become <code>other</code>.</li>
+      <li>No generated student replies, refunds, or public posts.</li>
+      <li>If top-class confidence is below 0.70, abstain and leave the ticket with the coordinator.</li>
+      <li>Predicted <code>cleanliness</code> always jumps the queue.</li>
+      <li>English only; other languages → <code>other</code>.</li>
+      <li>Hourly batch scoring is enough. Prototype may call a public AI API; production would need a campus data-processing agreement.</li>
+      <li>UI labels are words, not color alone; keyboard and screen-reader usable.</li>
+    </ul>
+
+    <h2 id="success">Success criteria</h2>
+    <p>These bars decide whether the problem is solved. Task 3–4 evaluation examples should map to this table.</p>
+    <table>
+      <caption>Go / no-go bars (80-comment frozen holdout)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Criterion</th>
+          <th scope="col">Bar</th>
+          <th scope="col">If we miss it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Macro-F1</th>
+          <td>≥ 0.78 and at least +0.08 vs a keyword baseline.</td>
+          <td>Do not claim the model is useful; keep iterating.</td>
+        </tr>
+        <tr>
+          <th scope="row">Cleanliness recall</th>
+          <td>≥ 0.90. Read every false negative.</td>
+          <td><strong>Do not ship auto-routing.</strong> Hygiene misses are worse than a slow inbox.</td>
+        </tr>
+        <tr>
+          <th scope="row">Precision (food &amp; wait)</th>
+          <td>≥ 0.80 each, so the wrong owner is not paged.</td>
+          <td>Keep human routing for those classes.</td>
+        </tr>
+        <tr>
+          <th scope="row">Abstain rate</th>
+          <td>10–25% of comments left unlabeled at the 0.70 gate.</td>
+          <td>If &lt;10%, the gate is too loose. If &gt;25%, the coordinator still does all the work.</td>
+        </tr>
+        <tr>
+          <th scope="row">Time-to-route</th>
+          <td>Median handling time under 15s (from ~45s) in a 10-day shadow test.</td>
+          <td>The feature is a toy; do not turn on Slack auto-forward.</td>
+        </tr>
+        <tr>
+          <th scope="row">Label quality</th>
+          <td>Cohen’s kappa ≥ 0.70 on a 50-comment double-rated slice before treating labels as gold.</td>
+          <td>Fix the label guide; do not tune the model on noisy gold.</td>
+        </tr>
+      </tbody>
+    </table>
+    <blockquote>
+      <p>Ship routing only if cleanliness recall and macro-F1 both clear. Otherwise the prototype stays a search aid with full human triage.</p>
+    </blockquote>
+
+    <h2 id="next">What Task 2 can build</h2>
+    <p>A small prototype that sends one comment to a model library or public AI API, parses a JSON label + confidence, abstains below 0.70, and shows the four labels in plain language. Task 3 adds error handling (timeouts, invalid JSON, empty input) and scored examples against the bars above. Task 4 packages that into a beginner-friendly app.</p>
+    <p>Out of scope for the whole track: campus-wide sentiment, automated student email, training on Yelp or social media, replacing health-department reporting.</p>
+  </main>
+  <footer>
+    <p>Task 1 deliverable. Synthetic examples only. No student records.</p>
+  </footer>
+</body>
+</html>

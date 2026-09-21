@@ -1,10 +1,3 @@
-# Dining comment routing brief
-Accessible HTML brief for a narrow classification use case, plus LinkedIn article copy.
-- Open `index.html` in a browser (the document to share).
-- Paste `LINKEDIN-ARTICLE.md` into LinkedIn’s article composer, publish, and use that article URL.
-
-
-
 # Route dining-hall comments. Don’t build another campus chatbot.
 Most “AI on campus” pitches are too wide: a tutor for every course, a copilot for every office. This one is small on purpose.
 **The job:** take short comments from one dining hall’s QR form and propose a single label — food quality, wait time, cleanliness, or other — so the right person sees the ticket first. A coordinator still decides what to do. The model does not reply to students.

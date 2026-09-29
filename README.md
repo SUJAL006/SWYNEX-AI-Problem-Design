@@ -28,29 +28,14 @@ The useful version is boring: four labels, one hall, one form, a holdout set you
 ---
 *Illustrative examples only; no student records.*
 
-DINING HALL ROUTER PROTOTYPE 
+---
 
-Applying confidence threshold: 0.70
+## Task 2: AI Routing Prototype
 
-Comment: 'The chicken was completely raw in the middle.'
-  -> Predicted: food_quality (0.95)
-  -> Routed As: food_quality
-----------------------------------------
-Comment: 'Lines for the sandwich station took 20 minutes today.'
-  -> Predicted: wait_time (0.98)
-  -> Routed As: wait_time
-----------------------------------------
-Comment: 'There are ants crawling all over the salad bar area!!'
-  -> Predicted: cleanliness (0.99)
-  -> Routed As: cleanliness
-  -> ⚠️ ACTION: URGENT QUEUE JUMP (Cleanliness)
-----------------------------------------
-Comment: 'Can we get more vegan options next semester?'
-  -> Predicted: other (0.85)
-  -> Routed As: other
-----------------------------------------
-Comment: 'I think the lighting is a bit dim in the back corner.'
-  -> Predicted: other (0.65)
-  -> Routed As: unlabeled
-  -> ⚠️ ACTION: Sent to Human Coordinator (Low Confidence)
-----------------------------------------
+This repository includes a functional Python prototype (`/task-2-prototype`) that implements the routing logic outlined above. It uses the OpenAI API (`gpt-4o-mini`) and Pydantic to enforce a strict classification schema, ensuring outputs only map to the defined categories. The script strictly applies the business constraints: enforcing a 0.70 confidence threshold and triggering immediate queue jumps for cleanliness-related comments.
+
+### How to Run Locally
+
+1. **Navigate to the prototype directory:**
+   ```bash
+   cd task-2-prototype

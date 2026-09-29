@@ -27,3 +27,30 @@ Not a sentiment dashboard. Not automated student email. Not training on Yelp. No
 The useful version is boring: four labels, one hall, one form, a holdout set you can read in an afternoon, and a human who still owns the queue.
 ---
 *Illustrative examples only; no student records.*
+
+DINING HALL ROUTER PROTOTYPE 
+
+Applying confidence threshold: 0.70
+
+Comment: 'The chicken was completely raw in the middle.'
+  -> Predicted: food_quality (0.95)
+  -> Routed As: food_quality
+----------------------------------------
+Comment: 'Lines for the sandwich station took 20 minutes today.'
+  -> Predicted: wait_time (0.98)
+  -> Routed As: wait_time
+----------------------------------------
+Comment: 'There are ants crawling all over the salad bar area!!'
+  -> Predicted: cleanliness (0.99)
+  -> Routed As: cleanliness
+  -> ⚠️ ACTION: URGENT QUEUE JUMP (Cleanliness)
+----------------------------------------
+Comment: 'Can we get more vegan options next semester?'
+  -> Predicted: other (0.85)
+  -> Routed As: other
+----------------------------------------
+Comment: 'I think the lighting is a bit dim in the back corner.'
+  -> Predicted: other (0.65)
+  -> Routed As: unlabeled
+  -> ⚠️ ACTION: Sent to Human Coordinator (Low Confidence)
+----------------------------------------
